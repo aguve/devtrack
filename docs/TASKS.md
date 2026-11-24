@@ -1,6 +1,6 @@
 # DevTrack backlog
 
-Phase 7 is complete. Phase 8 is the next pending phase.
+Phase 8 is authorized. Phase 9 remains pending.
 
 | ID | Phase | Status | Proposed exit criteria |
 | --- | --- | --- | --- |
@@ -12,7 +12,7 @@ Phase 7 is complete. Phase 8 is the next pending phase.
 | DT-05 | Issue management | APPROVED | Validated owner-scoped CRUD, search and filters verified. |
 | DT-06 | Board | APPROVED | Responsive, keyboard-accessible Kanban and loading, empty and error states verified. |
 | DT-07 | Regression | APPROVED | Mandatory commands pass, core line coverage reaches 80%, and independent security review passes. |
-| DT-08 | CI and deployment | PENDING | CI passes and production is reachable without a Vercel session. |
+| DT-08 | CI and deployment | IN_PROGRESS | CI passes and production is reachable without a Vercel session. |
 | DT-09 | Delivery | PENDING | Documentation, reports, repository and public URL delivered. Demo access delivered privately. |
 
 ## Implementation tasks and acceptance
@@ -109,3 +109,10 @@ No correction iterations were required. [Independent report](reports/DT-01-itera
 - Iteration 0 moved to REVIEW after Develop started the dedicated native Supabase stack, verified the migration copies, and applied all three migrations on a fresh reset. Both startup and reset exited 0.
 - Iteration 0 moved to APPROVED after Testing returned PASS on revision `8ce7a25`. All six mandatory commands exited 0, including the standard Turbopack production build. Testing passed 15 unit, five live integration, and 20 Chromium checks. Core line coverage was 100% (27/27). The defensive security review, secret scans, and dependency audits passed. No correction iterations were required. [Validation report](reports/DT-07-iteration-0.md)
 - Develop stopped the disposable Phase 7 stack with exit 0, removed its temporary credential file and logs, and verified no matching processes remained.
+
+## DT-08 history
+
+- DT-08A iteration 0 moved to IN_PROGRESS from baseline `f907290`. Native Develop `/root/develop` owns the GitHub Actions workflow. Native Testing `/root/testing` owns independent validation. No Git remote was configured at the start of the task.
+- Iteration 0 moved to REVIEW after Develop submitted the workflow and reported a successful actionlint check and local execution of its Supabase bootstrap step. Testing began independent review.
+- Testing returned BLOCKED on DT-08A iteration 0. The local replay passed all six commands, including 15 unit tests, five live integration tests, and 20 Chromium runs. Workflow lint, disposable Supabase setup and teardown, and evidence checks passed. A hosted run and artifact upload remain unverified because this checkout has no remote and the workflow has yet to be pushed. DT-08A stays in REVIEW and DT-08B remains PENDING. [Validation report](reports/DT-08A-iteration-0.md)
+- Testing and Develop stopped the disposable CI stacks and verified removal of their temporary credential and log files.

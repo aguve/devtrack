@@ -51,6 +51,11 @@ For browser confirmation checks, start the dedicated test stack with
 `DEVTRACK_TEST_MAILPIT_URL`. Return the local development site URL to
 `http://localhost:3000` when you resume interactive development.
 
+The [GitHub Actions workflow](.github/workflows/ci.yml) runs these gates on
+pull requests and pushes to `main`. It starts and resets a disposable local
+Supabase stack on the runner and uses Mailpit for confirmation email. The
+job summary and short-lived coverage artifact contain the gate outcomes.
+
 ## Supabase test isolation
 
 Run migration, database, and authentication tests against a dedicated local
