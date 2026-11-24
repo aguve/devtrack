@@ -1,6 +1,6 @@
 # DevTrack backlog
 
-Phase 3 is authorized. Phase 4 is outside the current scope.
+Phase 4 is authorized. Phase 5 is outside the current scope.
 
 | ID | Phase | Status | Proposed exit criteria |
 | --- | --- | --- | --- |
@@ -8,7 +8,7 @@ Phase 3 is authorized. Phase 4 is outside the current scope.
 | DT-01 | Requirements and architecture | APPROVED | Functional and quality criteria, architecture, dependency-ordered backlog and Testing-owned strategy recorded. Phase 1 is documentation only. |
 | DT-02 | Project and test infrastructure | APPROVED | Pinned app scaffold, all six scripts and test runners verified. |
 | DT-03 | Database and RLS | APPROVED | Versioned schema and owner-only CRUD verified using two users in a dedicated test database. |
-| DT-04 | Authentication | PENDING | Registration, login, logout and protected access validated. |
+| DT-04 | Authentication | APPROVED | Registration, login, logout and protected access validated. |
 | DT-05 | Issue management | PENDING | Validated owner-scoped CRUD, search and filters verified. |
 | DT-06 | Board | PENDING | Responsive, keyboard-accessible Kanban and loading, empty and error states verified. |
 | DT-07 | Regression | PENDING | Mandatory commands pass, core line coverage reaches 80%, and independent security review passes. |
@@ -71,3 +71,14 @@ No correction iterations were required. [Independent report](reports/DT-01-itera
 - DT-03B iteration 0 moved to APPROVED after native Testing `/root/testing` returned PASS on the database and RLS criteria. A fresh native reset and all three integration cases passed, including real two-user and anonymous API checks. Lint, typecheck, and the unit test also passed. The supplemental default Turbopack build was blocked by local worker bind permissions. The Webpack diagnostic build and both browser smoke checks passed. The default build remains required at the release gate. [Validation report](reports/DT-03B-iteration-0.md)
 - Phase 3 is APPROVED. Both tasks received PASS on their first independent review. Phase 4 remains PENDING.
 - Develop stopped the disposable native Supabase stack with exit 0 and verified removal of its generated credential files and logs. A startup diagnostic had briefly displayed disposable local keys in tool output. The stack was isolated and no production or Git credentials were involved.
+
+## DT-04 history
+
+- DT-04A iteration 0 moved to IN_PROGRESS. Native Develop `/root/develop` owns registration and sign-in implementation. Native Testing `/root/testing` owns test coverage and independent review. Baseline `1aa6f86` with Phase 3 changes staged by the human supervisor.
+- DT-04A iteration 0 moved to REVIEW. Develop reported a successful Webpack production build and Chromium smoke with real Supabase Auth and Mailpit. Default Turbopack hit a local worker-port restriction. Testing supplied live integration, browser, and credential checks. Pre-review live integration and all five unit tests passed.
+- DT-04A iteration 0 moved to APPROVED after Testing returned PASS. Lint and typecheck passed, along with five unit, four integration, and six browser checks. Testing corrected a test-owned assertion that misidentified a PKCE verifier as a session cookie and reran the browser suite. No application rejection. Default Turbopack build remained blocked by local worker-port permissions. [Validation report](reports/DT-04A-iteration-0.md)
+- DT-04B iteration 0 moved to IN_PROGRESS and was delegated to native Develop `/root/develop`.
+- DT-04B iteration 0 moved to REVIEW. Develop submitted the live session guard, refresh proxy, and logout action. Testing supplied independent session browser cases. Develop reported lint, typecheck, Webpack production build, and two focused browser checks passing.
+- DT-04B iteration 0 moved to APPROVED after Testing returned PASS. Five unit checks, four live integration checks, and eight Chromium checks passed. Lint and typecheck passed. The Webpack production build passed and supported the browser suite. The default Turbopack command still failed on the local worker-port restriction. [Validation report](reports/DT-04B-iteration-0.md)
+- Phase 4 is APPROVED. Both tasks passed on their first independent review. Phase 5 remains PENDING.
+- Develop stopped the isolated Phase 4 Supabase stack with exit 0 and verified removal of its generated private environment and diagnostic files. The human supervisor's staged changes were preserved.

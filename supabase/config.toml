@@ -17,3 +17,10 @@ enabled = false
 [auth]
 enabled = true
 site_url = "http://localhost:3000"
+
+[auth.email]
+enable_confirmations = true
+
+[auth.email.template.confirmation]
+subject = "Confirm your DevTrack account"
+content_path = "./supabase/templates/confirmation.html"

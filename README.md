@@ -1,8 +1,7 @@
 # DevTrack
 
 DevTrack is a developer issue tracker built with Next.js, TypeScript, and
-Tailwind CSS. The current scaffold serves a home page and provides the test
-runners for the planned Supabase-backed application.
+Tailwind CSS. DevTrack uses Supabase Auth for registration and sign-in.
 
 ## Local setup
 
@@ -10,10 +9,17 @@ Use Node.js 22.22.1 or a compatible newer patch on the Node.js 22 line, and npm.
 
 ```sh
 npm ci
-npm run dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Set `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` in `.env.local` using
+the dedicated local Supabase stack described below. Run `npm run dev` and
+open [http://localhost:3000](http://localhost:3000).
+
+Set the hosted Supabase Auth Site URL to the production application origin and copy
+`supabase/templates/confirmation.html` into the hosted Confirm signup
+template when configuring deployment. Locally, the CLI loads the template
+and delivers signup email to its Mailpit inbox.
 
 ## Quality checks
 
@@ -36,15 +42,19 @@ Put framework-independent business rules under `src/core/`, the designated
 coverage scope. Coverage is reported in `coverage/`; the 80% line threshold
 applies as business logic is introduced.
 
-The integration command runs a scaffold smoke suite. The browser command
-exercises the same scaffold in Chromium. Run the build before the browser
-suite so Playwright can start the production server on loopback.
+The integration command includes database checks. Run the build before the
+browser suite so Playwright can start the production server on loopback.
+If a managed sandbox blocks Turbopack's local worker port, run
+`npm run build -- --webpack` to build for browser checks in that sandbox.
+For browser confirmation checks, start the dedicated test stack with
+`auth.site_url` set to `http://127.0.0.1:3100` and supply its Mailpit URL as
+`DEVTRACK_TEST_MAILPIT_URL`. Return the local development site URL to
+`http://localhost:3000` when you resume interactive development.
 
 ## Supabase test isolation
 
-The scaffold smoke suites require no Supabase credentials. When migration and
-database tests are added, run them against a dedicated local Supabase stack
-or an isolated CI stack with its own URL, database, authentication users,
+Run migration, database, and authentication tests against a dedicated local
+Supabase stack or an isolated CI stack with its own URL, database, authentication users,
 and credentials. Confirm the target is dedicated before applying migrations,
 resetting data, or creating fixtures. Keep production and demo accounts out
 of test runs.
