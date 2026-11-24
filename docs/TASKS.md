@@ -1,6 +1,6 @@
 # DevTrack backlog
 
-Phase 6 is complete. Phase 7 is the next pending phase and requires human approval.
+Phase 7 is complete. Phase 8 is the next pending phase.
 
 | ID | Phase | Status | Proposed exit criteria |
 | --- | --- | --- | --- |
@@ -11,7 +11,7 @@ Phase 6 is complete. Phase 7 is the next pending phase and requires human approv
 | DT-04 | Authentication | APPROVED | Registration, login, logout and protected access validated. |
 | DT-05 | Issue management | APPROVED | Validated owner-scoped CRUD, search and filters verified. |
 | DT-06 | Board | APPROVED | Responsive, keyboard-accessible Kanban and loading, empty and error states verified. |
-| DT-07 | Regression | PENDING | Mandatory commands pass, core line coverage reaches 80%, and independent security review passes. |
+| DT-07 | Regression | APPROVED | Mandatory commands pass, core line coverage reaches 80%, and independent security review passes. |
 | DT-08 | CI and deployment | PENDING | CI passes and production is reachable without a Vercel session. |
 | DT-09 | Delivery | PENDING | Documentation, reports, repository and public URL delivered. Demo access delivered privately. |
 
@@ -102,3 +102,10 @@ No correction iterations were required. [Independent report](reports/DT-01-itera
 - DT-06B iteration 0 moved to APPROVED after Testing returned PASS. Independent validation passed 15 unit, five integration, and 20 browser checks, including two live RPC outage and retry journeys. Core line coverage was 100% (27/27). Lint and typecheck passed. Webpack output supplied browser validation. [Validation report](reports/DT-06B-iteration-0.md)
 - Phase 6 is APPROVED. Both tasks received Testing PASS. Phase 7 remains PENDING and is awaiting authorization.
 - Develop stopped the isolated Phase 6 Supabase stack with exit 0 and verified removal of its temporary environment and log files. No matching stack processes remained.
+
+## DT-07 history
+
+- DT-07 iteration 0 moved to IN_PROGRESS from baseline `8ce7a25`. Native Develop `/root/develop` was assigned to prepare the isolated regression environment. Native Testing `/root/testing` owns independent validation.
+- Iteration 0 moved to REVIEW after Develop started the dedicated native Supabase stack, verified the migration copies, and applied all three migrations on a fresh reset. Both startup and reset exited 0.
+- Iteration 0 moved to APPROVED after Testing returned PASS on revision `8ce7a25`. All six mandatory commands exited 0, including the standard Turbopack production build. Testing passed 15 unit, five live integration, and 20 Chromium checks. Core line coverage was 100% (27/27). The defensive security review, secret scans, and dependency audits passed. No correction iterations were required. [Validation report](reports/DT-07-iteration-0.md)
+- Develop stopped the disposable Phase 7 stack with exit 0, removed its temporary credential file and logs, and verified no matching processes remained.
