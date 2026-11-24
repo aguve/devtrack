@@ -29,7 +29,12 @@ export async function insertIssue(client: Client, userId: string, fields: IssueF
   return !error;
 }
 
-export async function updateIssue(client: Client, userId: string, id: string, fields: IssueFields) {
+export async function updateIssue(
+  client: Client,
+  userId: string,
+  id: string,
+  fields: IssueFields | Pick<IssueFields, "status">,
+) {
   const { data, error } = await client
     .from("issues")
     .update(fields)

@@ -1,6 +1,6 @@
 # DevTrack backlog
 
-Phase 5 is authorized. Phase 6 is outside the current scope.
+Phase 6 is complete. Phase 7 is the next pending phase and requires human approval.
 
 | ID | Phase | Status | Proposed exit criteria |
 | --- | --- | --- | --- |
@@ -10,7 +10,7 @@ Phase 5 is authorized. Phase 6 is outside the current scope.
 | DT-03 | Database and RLS | APPROVED | Versioned schema and owner-only CRUD verified using two users in a dedicated test database. |
 | DT-04 | Authentication | APPROVED | Registration, login, logout and protected access validated. |
 | DT-05 | Issue management | APPROVED | Validated owner-scoped CRUD, search and filters verified. |
-| DT-06 | Board | PENDING | Responsive, keyboard-accessible Kanban and loading, empty and error states verified. |
+| DT-06 | Board | APPROVED | Responsive, keyboard-accessible Kanban and loading, empty and error states verified. |
 | DT-07 | Regression | PENDING | Mandatory commands pass, core line coverage reaches 80%, and independent security review passes. |
 | DT-08 | CI and deployment | PENDING | CI passes and production is reachable without a Vercel session. |
 | DT-09 | Delivery | PENDING | Documentation, reports, repository and public URL delivered. Demo access delivered privately. |
@@ -91,4 +91,14 @@ No correction iterations were required. [Independent report](reports/DT-01-itera
 - DT-05B iteration 0 moved to IN_PROGRESS and was delegated to native Develop `/root/develop`.
 - DT-05B iteration 0 moved to REVIEW. Develop reported lint, typecheck, 11 unit tests, five integration tests, and core query implementation complete. Testing corrected a database fixture typing error before independent review.
 - DT-05B iteration 0 moved to APPROVED after Testing returned PASS. Independent checks passed for lint/typecheck, 11 unit, five live integration, and 14 browser runs. Core line coverage was 100% (23/23). The first browser review had two test locator issues, which Testing corrected and reran. No application fixes were needed. Webpack build passed. [Validation report](reports/DT-05B-iteration-0.md)
-- Phase 5 is APPROVED. Both tasks received Testing PASS. Phase 6 remains PENDING.
+- Phase 5 is APPROVED. Both tasks received Testing PASS. Phase 6 is complete.
+
+## DT-06 history
+
+- DT-06A iteration 0 moved to IN_PROGRESS from baseline `f721b69`. Native Develop `/root/develop` owns Kanban implementation. Native Testing `/root/testing` owns tests and independent review.
+- DT-06A iteration 0 moved to APPROVED after Testing returned PASS. Independent 13 unit, five integration, and 16 browser checks passed. Core line coverage 100% (27/27). Testing scoped two assertions after the new status selector created ambiguous text matches. No app corrections. Webpack build passed; default Turbopack remains blocked by worker-port permissions. [Validation report](reports/DT-06A-iteration-0.md)
+- DT-06B iteration 0 moved to IN_PROGRESS and was delegated to native Develop `/root/develop`.
+- DT-06B iteration 0 moved to REVIEW after Develop submitted board states, accessibility and responsive handling.
+- DT-06B iteration 0 moved to APPROVED after Testing returned PASS. Independent validation passed 15 unit, five integration, and 20 browser checks, including two live RPC outage and retry journeys. Core line coverage was 100% (27/27). Lint and typecheck passed. Webpack output supplied browser validation. [Validation report](reports/DT-06B-iteration-0.md)
+- Phase 6 is APPROVED. Both tasks received Testing PASS. Phase 7 remains PENDING and is awaiting authorization.
+- Develop stopped the isolated Phase 6 Supabase stack with exit 0 and verified removal of its temporary environment and log files. No matching stack processes remained.

@@ -67,11 +67,13 @@ test("owners can create, edit, cancel deletion, and delete an issue with persist
     await expect(amended).toBeVisible();
     await page.reload();
     await expect(amended.getByText("Collect deployment logs.")).toBeVisible();
-    await expect(amended.getByText("High", { exact: true })).toBeVisible();
-    await expect(amended.getByText("In progress", { exact: true })).toBeVisible();
+    const displayedValues = amended.getByRole("definition");
+    await expect(displayedValues.filter({ hasText: /^High$/ })).toBeVisible();
+    await expect(displayedValues.filter({ hasText: /^In progress$/ })).toBeVisible();
 
     await amended.getByRole("button", { name: "Delete", exact: true }).click();
     await amended.getByRole("button", { name: "Cancel", exact: true }).click();
+    await expect(amended.getByRole("button", { name: "Delete", exact: true })).toBeFocused();
     await page.reload();
     await expect(amended).toBeVisible();
 

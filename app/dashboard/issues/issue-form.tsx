@@ -45,7 +45,7 @@ export function IssueForm({ issue }: { issue?: Issue }) {
         <textarea {...field("description")} defaultValue={values?.description ?? ""} rows={3} />
         {errorFor("description")}
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className={issue ? "grid gap-4" : "grid gap-4 sm:grid-cols-2"}>
         <div>
           <label htmlFor={formId + "priority"} className="font-medium">Priority</label>
           <select {...field("priority")} defaultValue={values?.priority ?? "medium"}>

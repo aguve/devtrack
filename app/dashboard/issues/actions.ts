@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { issueFieldsSchema, issueIdSchema, type IssueFields } from "@/src/core/issues/schema";
+import { issueFieldsSchema, issueIdSchema, issueStatusSchema, type IssueFields } from "@/src/core/issues/schema";
 import { deleteIssue, insertIssue, updateIssue } from "@/src/server/supabase/issues";
 import { requireSession } from "@/src/server/supabase/session";
 
@@ -67,6 +67,26 @@ export async function removeIssue(id: string): Promise<IssueActionState> {
     return {
       message: { kind: "error", text: "Could not delete this issue. It may have already been deleted." },
     };
+  }
+
+  revalidatePath("/dashboard");
+  return {};
+}
+
+export async function moveIssue(
+  id: string,
+  _state: IssueActionState,
+  data: FormData,
+): Promise<IssueActionState> {
+  const { supabase, user } = await requireSession();
+  const status = issueStatusSchema.safeParse(data.get("status"));
+  if (!status.success) {
+    return { message: { kind: "error", text: "Choose a valid status." } };
+  }
+
+  const parsedId = issueIdSchema.safeParse(id);
+  if (!parsedId.success || !await updateIssue(supabase, user.id, parsedId.data, { status: status.data })) {
+    return { message: { kind: "error", text: "Could not move this issue. Try again." } };
   }
 
   revalidatePath("/dashboard");

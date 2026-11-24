@@ -1,9 +1,10 @@
 "use client";
 
-import { useActionState, useId, useState } from "react";
+import { useActionState, useRef, useState } from "react";
 import { priorityLabels, statusLabels, type Issue } from "@/src/core/issues/schema";
 import { removeIssue, type IssueActionState } from "./actions";
 import { IssueForm } from "./issue-form";
+import { MoveIssueForm } from "./move-issue-form";
 
 const buttonClass = "rounded-md border border-slate-400 px-3 py-1.5 font-medium";
 
@@ -29,13 +30,22 @@ function DeleteIssueForm({ issueId, onCancel }: { issueId: string; onCancel: () 
   );
 }
 
-export function IssueCard({ issue }: { issue: Issue }) {
-  const titleId = useId();
+export function IssueCard({
+  issue,
+  onMoveStart,
+  onMoveFailure,
+}: {
+  issue: Issue;
+  onMoveStart: (id: string, status: string) => void;
+  onMoveFailure: (id: string) => void;
+}) {
+  const titleId = `issue-title-${issue.id}`;
+  const deleteButton = useRef<HTMLButtonElement>(null);
   const [panel, setPanel] = useState<"edit" | "delete" | null>(null);
 
   return (
     <article aria-labelledby={titleId} className="rounded-lg border border-slate-300 bg-white p-4">
-      <h3 id={titleId} className="text-lg font-semibold wrap-anywhere">{issue.title}</h3>
+      <h4 id={titleId} tabIndex={-1} className="text-lg font-semibold wrap-anywhere">{issue.title}</h4>
       {issue.description && <p className="mt-2 whitespace-pre-wrap wrap-anywhere">{issue.description}</p>}
       <dl className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
         <div className="flex gap-1">
@@ -57,6 +67,7 @@ export function IssueCard({ issue }: { issue: Issue }) {
           Edit
         </button>
         <button
+          ref={deleteButton}
           type="button"
           aria-expanded={panel === "delete"}
           onClick={() => setPanel(panel === "delete" ? null : "delete")}
@@ -65,8 +76,16 @@ export function IssueCard({ issue }: { issue: Issue }) {
           Delete
         </button>
       </div>
+      {panel === null && (
+        <MoveIssueForm issue={issue} onMoveStart={onMoveStart} onMoveFailure={onMoveFailure} />
+      )}
       {panel === "edit" && <IssueForm issue={issue} />}
-      {panel === "delete" && <DeleteIssueForm issueId={issue.id} onCancel={() => setPanel(null)} />}
+      {panel === "delete" && (
+        <DeleteIssueForm issueId={issue.id} onCancel={() => {
+          setPanel(null);
+          deleteButton.current?.focus();
+        }} />
+      )}
     </article>
   );
 }
