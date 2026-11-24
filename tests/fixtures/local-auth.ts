@@ -27,7 +27,7 @@ export function localAuth() {
     const headers = new Headers({ apikey: key, "Content-Type": "application/json" });
     const bearer = token ?? (key.startsWith("sb_") ? undefined : key);
     if (bearer) headers.set("Authorization", `Bearer ${bearer}`);
-    return fetch(apiOrigin + "/auth/v1" + path, {
+    return fetch(apiOrigin + path, {
       method,
       headers,
       body: body && JSON.stringify(body),
@@ -36,11 +36,16 @@ export function localAuth() {
     });
   }
 
+  const requestAuth = (path: string, method: string, key: string, body?: object, token?: string) =>
+    request("/auth/v1" + path, method, key, body, token);
+
   return {
     auth: (path: string, method: string, body?: object, token?: string) =>
-      request(path, method, anonKey, body, token),
+      requestAuth(path, method, anonKey, body, token),
+    issues: (method: "GET" | "DELETE", filter: URLSearchParams, token: string) =>
+      request(`/rest/v1/issues?${filter}`, method, anonKey, undefined, token),
     async createConfirmedUser(credentials: ReturnType<typeof makeAuthFixture>) {
-      const response = await request("/admin/users", "POST", serviceKey, {
+      const response = await requestAuth("/admin/users", "POST", serviceKey, {
         ...credentials,
         email_confirm: true,
       });
@@ -50,12 +55,12 @@ export function localAuth() {
     async cleanup(email: string) {
       const uuid = /^[\da-f]{8}(?:-[\da-f]{4}){3}-[\da-f]{12}$/i;
       for (let page = 1; ; page++) {
-        const response = await request(`/admin/users?page=${page}&per_page=100`, "GET", serviceKey);
+        const response = await requestAuth(`/admin/users?page=${page}&per_page=100`, "GET", serviceKey);
         if (!response.ok) throw new Error(`List local fixtures failed (HTTP ${response.status}).`);
         const { users }: { users: { id: string; email?: string }[] } = await response.json();
         const user = users.find((item) => item.email === email && uuid.test(item.id));
         if (user) {
-          const deleted = await request(`/admin/users/${user.id}`, "DELETE", serviceKey);
+          const deleted = await requestAuth(`/admin/users/${user.id}`, "DELETE", serviceKey);
           if (!deleted.ok) throw new Error(`Delete local fixture failed (HTTP ${deleted.status}).`);
           return;
         }

@@ -3,6 +3,7 @@ import "server-only";
 import { createServerClient, type CookieMethodsServer } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { z } from "zod";
+import type { Database } from "./database";
 
 const environmentSchema = z.object({
   SUPABASE_URL: z.url({ protocol: /^https?$/ }),
@@ -19,7 +20,7 @@ export function createRequestSupabaseClient(cookieMethods: CookieMethodsServer) 
     throw new Error("Supabase authentication configuration is invalid.");
   }
 
-  return createServerClient(
+  return createServerClient<Database>(
     environment.data.SUPABASE_URL,
     environment.data.SUPABASE_PUBLISHABLE_KEY,
     {
