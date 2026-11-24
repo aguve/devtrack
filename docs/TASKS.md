@@ -1,14 +1,13 @@
 # DevTrack backlog
 
-Phase 1 is authorized. The remaining entries define the proposed
-sequence. Phase 2 requires human approval.
+Phase 3 is authorized. Phase 4 is outside the current scope.
 
 | ID | Phase | Status | Proposed exit criteria |
 | --- | --- | --- | --- |
 | DT-00 | Native workflow setup | APPROVED | Config loads in the installed CLI, both custom roles run independently, Testing owns directives, and no application work begins. |
 | DT-01 | Requirements and architecture | APPROVED | Functional and quality criteria, architecture, dependency-ordered backlog and Testing-owned strategy recorded. Phase 1 is documentation only. |
-| DT-02 | Project and test infrastructure | PENDING | Pinned app scaffold, all six scripts and test runners verified. |
-| DT-03 | Database and RLS | PENDING | Versioned schema and owner-only CRUD verified using two users in a dedicated test database. |
+| DT-02 | Project and test infrastructure | APPROVED | Pinned app scaffold, all six scripts and test runners verified. |
+| DT-03 | Database and RLS | IN_PROGRESS | Versioned schema and owner-only CRUD verified using two users in a dedicated test database. |
 | DT-04 | Authentication | PENDING | Registration, login, logout and protected access validated. |
 | DT-05 | Issue management | PENDING | Validated owner-scoped CRUD, search and filters verified. |
 | DT-06 | Board | PENDING | Responsive, keyboard-accessible Kanban and loading, empty and error states verified. |
@@ -18,7 +17,7 @@ sequence. Phase 2 requires human approval.
 
 ## Implementation tasks and acceptance
 
-All tasks below are PENDING. Each independently reviewed task needs its own
+Tasks without a recorded status are PENDING. Each independently reviewed task needs its own
 assignment, evidence, and verdict. A task starts after its listed dependencies
 have passed and its phase is authorized.
 
@@ -51,3 +50,18 @@ PENDING → IN_PROGRESS → REVIEW → APPROVED. The Orchestrator prepared the
 requirements, architecture, and backlog. Native Testing `/root/testing` authored
 the test strategy and issued PASS on iteration 0 for the planning deliverables.
 No correction iterations were required. [Independent report](reports/DT-01-iteration-0.md)
+
+## DT-02 history
+
+- DT-02A iteration 0 moved to IN_PROGRESS and was delegated to native Develop `/root/develop` from baseline `08371e2`.
+- DT-02A iteration 0 moved to REVIEW after Develop submitted the scaffold. Develop reported successful clean installation, lint, typecheck, and production build. The build required approval for Turbopack to bind a local port.
+- DT-02A iteration 0 moved to APPROVED after native Testing `/root/testing` returned PASS. Independent clean installation, lint, typecheck, build and Tailwind checks passed. [Validation report](reports/DT-02A-iteration-0.md)
+- DT-02B iteration 0 moved to IN_PROGRESS and was delegated to native Develop `/root/develop`.
+- DT-02B iteration 0 moved to REVIEW after Develop submitted the package wiring and Testing submitted the test-owned configuration and suites. During local validation, Develop found an SSR assertion that excluded a valid head element. Testing corrected the assertion before independent review. Develop reported all six commands passing after a clean lockfile install.
+- DT-02B iteration 0 moved to APPROVED after native Testing `/root/testing` returned PASS. Independent clean install and all six commands passed. A temporary negative control confirmed that an unimported core file is measured and can fail the 80% gate. [Validation report](reports/DT-02B-iteration-0.md)
+- Phase 2 is APPROVED. Both tasks received PASS on their first independent review. Phase 3 remains PENDING.
+
+## DT-03 history
+
+- DT-03A iteration 0 moved to IN_PROGRESS and was delegated to native Develop `/root/develop`. The Git baseline was `08371e2`, with approved Phase 2 work still in the working tree.
+- DT-03A iteration 0 moved to REVIEW. Docker Desktop's socket was missing and the default daemon denied access. Develop started the official Supabase CLI native runtime in an isolated temporary project and reported a successful fresh local reset with the schema migration applied. Testing supplied guarded, rollback-only schema checks.
