@@ -58,7 +58,7 @@ See [the test strategy](docs/TEST_STRATEGY.md) for required database checks
 and [the agent workflow](docs/AGENT_WORKFLOW.md) for the independent review
 process.
 
-### Running the schema checks locally
+### Running schema and RLS checks locally
 
 Start a Docker-compatible engine and use the pinned Supabase CLI from the
 repository root. The local project ID is `devtrack-local`, and the API and
@@ -67,8 +67,17 @@ database ports are 54321 and 54322.
 ```sh
 npx --yes supabase@3.3.0 start
 npx --yes supabase@3.3.0 db reset --local
-DEVTRACK_DB_TEST=1 npm run test:integration
 ```
+
+Supply these variables from the dedicated local stack in a private shell
+environment, then run `npm run test:integration`.
+
+| Variable | Local test value |
+| --- | --- |
+| `DEVTRACK_DB_TEST` | `1` |
+| `DEVTRACK_TEST_SUPABASE_URL` | `http://127.0.0.1:54321` |
+| `DEVTRACK_TEST_SUPABASE_ANON_KEY` | Local stack's anonymous JWT key |
+| `DEVTRACK_TEST_SUPABASE_SERVICE_ROLE_KEY` | Local stack's service role JWT key, used in the test process for fixture setup and cleanup |
 
 The reset recreates the dedicated local database and applies the versioned
 migrations. Run it only against the disposable DevTrack test stack. The test

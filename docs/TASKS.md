@@ -7,7 +7,7 @@ Phase 3 is authorized. Phase 4 is outside the current scope.
 | DT-00 | Native workflow setup | APPROVED | Config loads in the installed CLI, both custom roles run independently, Testing owns directives, and no application work begins. |
 | DT-01 | Requirements and architecture | APPROVED | Functional and quality criteria, architecture, dependency-ordered backlog and Testing-owned strategy recorded. Phase 1 is documentation only. |
 | DT-02 | Project and test infrastructure | APPROVED | Pinned app scaffold, all six scripts and test runners verified. |
-| DT-03 | Database and RLS | IN_PROGRESS | Versioned schema and owner-only CRUD verified using two users in a dedicated test database. |
+| DT-03 | Database and RLS | APPROVED | Versioned schema and owner-only CRUD verified using two users in a dedicated test database. |
 | DT-04 | Authentication | PENDING | Registration, login, logout and protected access validated. |
 | DT-05 | Issue management | PENDING | Validated owner-scoped CRUD, search and filters verified. |
 | DT-06 | Board | PENDING | Responsive, keyboard-accessible Kanban and loading, empty and error states verified. |
@@ -65,3 +65,9 @@ No correction iterations were required. [Independent report](reports/DT-01-itera
 
 - DT-03A iteration 0 moved to IN_PROGRESS and was delegated to native Develop `/root/develop`. The Git baseline was `08371e2`, with approved Phase 2 work still in the working tree.
 - DT-03A iteration 0 moved to REVIEW. Docker Desktop's socket was missing and the default daemon denied access. Develop started the official Supabase CLI native runtime in an isolated temporary project and reported a successful fresh local reset with the schema migration applied. Testing supplied guarded, rollback-only schema checks.
+- DT-03A iteration 0 moved to APPROVED after native Testing `/root/testing` independently reset the native Supabase stack and returned PASS. The exact migration matched revision `1aa6f86`. Lint, typecheck, and both integration checks passed. [Validation report](reports/DT-03A-iteration-0.md)
+- DT-03B iteration 0 moved to IN_PROGRESS and was delegated to native Develop `/root/develop`.
+- DT-03B iteration 0 moved to REVIEW after Develop submitted the owner-policy migration and documented local setup. Develop reported both migrations applied and the expected grants and four policies present. Testing's pre-review live integration run passed all three tests with approved loopback access.
+- DT-03B iteration 0 moved to APPROVED after native Testing `/root/testing` returned PASS on the database and RLS criteria. A fresh native reset and all three integration cases passed, including real two-user and anonymous API checks. Lint, typecheck, and the unit test also passed. The supplemental default Turbopack build was blocked by local worker bind permissions. The Webpack diagnostic build and both browser smoke checks passed. The default build remains required at the release gate. [Validation report](reports/DT-03B-iteration-0.md)
+- Phase 3 is APPROVED. Both tasks received PASS on their first independent review. Phase 4 remains PENDING.
+- Develop stopped the disposable native Supabase stack with exit 0 and verified removal of its generated credential files and logs. A startup diagnostic had briefly displayed disposable local keys in tool output. The stack was isolated and no production or Git credentials were involved.
