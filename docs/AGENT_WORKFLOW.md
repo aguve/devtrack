@@ -11,8 +11,8 @@ role Markdown. Both inherit the parent model and permissions.
    Develop reads its instructions and Testing's directives and reports local results.
 3. Spawn the native `testing` role against the resulting change. Testing applies
    its own directives and records actual evidence in docs/reports/.
-4. Apply the lifecycle in AGENTS.md. Integrate and commit work after independent
-   approval. Record commit IDs and agent thread IDs in the task history.
+4. Apply the lifecycle in AGENTS.md. Integrate work after independent
+   approval. The human supervisor owns commits. Record commit IDs and agent thread IDs in the task history.
 
 For a read-only smoke check, ask Codex to spawn both custom types and have
 each child read its required files and report the paths and its thread ID.

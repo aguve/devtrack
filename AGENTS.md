@@ -6,8 +6,8 @@ agent must read the repository instructions and its role file. Develop also
 reads and follows Testing's directives before every assignment.
 
 The Orchestrator owns requirements, architecture, backlog, acceptance criteria,
-integration and Git commits. Define small tasks with testable criteria before
-assigning them. Keep application implementation with Develop and approval with
+and integration. The human supervisor owns Git commits. Define small tasks
+with testable criteria before assigning them. Keep application implementation with Develop and approval with
 Testing. Obtain human authorization for external operations when needed.
 
 Track work in docs/TASKS.md. Use PENDING → IN_PROGRESS → REVIEW → APPROVED.
