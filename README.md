@@ -7,7 +7,7 @@ authentication and persistent, user-isolated issues.
 ## Release
 
 - [Public production application](https://devtrack-three.vercel.app)
-- [GitHub repository](https://github.com/aguve/devtrack) (private, access required)
+- [GitHub repository](https://github.com/aguve/devtrack)
 - Production source revision `baa62752e3d1c2ce7944086942ede9c60232fd25`
 
 Evaluator demo access is shared separately through a private channel.
