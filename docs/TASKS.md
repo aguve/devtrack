@@ -1,6 +1,6 @@
 # DevTrack backlog
 
-Phase 8 is authorized. Phase 9 remains pending.
+Phase 8 is complete. Phase 9 is the next pending phase.
 
 | ID | Phase | Status | Proposed exit criteria |
 | --- | --- | --- | --- |
@@ -12,7 +12,7 @@ Phase 8 is authorized. Phase 9 remains pending.
 | DT-05 | Issue management | APPROVED | Validated owner-scoped CRUD, search and filters verified. |
 | DT-06 | Board | APPROVED | Responsive, keyboard-accessible Kanban and loading, empty and error states verified. |
 | DT-07 | Regression | APPROVED | Mandatory commands pass, core line coverage reaches 80%, and independent security review passes. |
-| DT-08 | CI and deployment | IN_PROGRESS | CI passes and production is reachable without a Vercel session. |
+| DT-08 | CI and deployment | APPROVED | CI passes and production is reachable without a Vercel session. |
 | DT-09 | Delivery | PENDING | Documentation, reports, repository and public URL delivered. Demo access delivered privately. |
 
 ## Implementation tasks and acceptance
@@ -116,3 +116,10 @@ No correction iterations were required. [Independent report](reports/DT-01-itera
 - Iteration 0 moved to REVIEW after Develop submitted the workflow and reported a successful actionlint check and local execution of its Supabase bootstrap step. Testing began independent review.
 - Testing returned BLOCKED on DT-08A iteration 0. The local replay passed all six commands, including 15 unit tests, five live integration tests, and 20 Chromium runs. Workflow lint, disposable Supabase setup and teardown, and evidence checks passed. A hosted run and artifact upload remain unverified because this checkout has no remote and the workflow has yet to be pushed. DT-08A stays in REVIEW and DT-08B remains PENDING. [Validation report](reports/DT-08A-iteration-0.md)
 - Testing and Develop stopped the disposable CI stacks and verified removal of their temporary credential and log files.
+- The human supervisor authorized creating and pushing the repository. The Orchestrator created private `aguve/devtrack` and pushed `main` at `baa6275`.
+- DT-08A iteration 0 moved to APPROVED after Testing independently verified the hosted run and downloaded its evidence. All six gates passed, including 20 browser checks. Core line coverage was 100% (27/27). No correction cycle was required. [Hosted validation report](reports/DT-08A-iteration-0-hosted.md)
+- DT-08B moved to IN_PROGRESS. Develop was assigned production deployment preparation.
+- DT-08B remains in progress with a BLOCKED prerequisite assessment. Develop prepared the [deployment guide](DEPLOYMENT.md). Vercel CLI `whoami` and Supabase CLI `projects list` both exited 1 and required authentication. Testing independently found no linked production projects or production URL and reported BLOCKED. The follow-up report-writing turn stopped at the agent usage limit. Production migrations, public access, and the demo account remain unverified.
+- The human supervisor authorized free project creation, production migrations, public deployment, and disabling email confirmation. Develop created the projects, applied all three migrations, and deployed the approved revision `baa6275` to [the production alias](https://devtrack-three.vercel.app). Develop created the ordinary demo account and recorded the email verification improvement in the deployment guide. DT-08B moved to REVIEW.
+- DT-08B iteration 0 moved to APPROVED after Testing returned PASS. Testing independently verified the production alias without a Vercel session, protected dashboard navigation, the ordinary demo account, sign-out, and evidence for all three applied migrations. [Production validation report](reports/DT-08B-iteration-0.md)
+- Phase 8 is APPROVED. Phase 9 remains PENDING.
