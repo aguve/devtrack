@@ -43,3 +43,20 @@ auth, integration, and browser checks. The production deployment uses a
 separate Supabase project and a public Vercel production URL. Environment
 configuration includes only placeholders in Git. Exact compatible framework
 and test dependency versions are selected and verified during project setup.
+
+## Release decisions and limits
+
+- Supabase Auth sessions use HTTP-only cookies. The dashboard proxy refreshes
+  tokens, and protected page rendering and issue mutations verify identity on
+  the server. PostgreSQL policies independently enforce issue ownership.
+- Search uses a parameterized, security-invoker PostgreSQL function. It matches
+  literal case-insensitive substrings in both fields and applies exact status
+  and priority filters before ordering by update time and UUID.
+- Kanban movement uses a labeled status selector and a submit button. The
+  board stacks its columns on narrow screens and preserves URL-backed filters.
+- Production uses Vercel Hobby and Supabase Free. A low-activity database can
+  pause. The owner can restore it from Supabase before evaluation. The first
+  Vercel release used the CLI and the approved Git revision.
+- The supervisor approved production signup without mailbox verification.
+  Local confirmation is exercised through Mailpit. The [deployment guide](DEPLOYMENT.md)
+  describes how to enable production confirmation with approved free SMTP.

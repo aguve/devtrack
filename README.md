@@ -1,7 +1,27 @@
 # DevTrack
 
-DevTrack is a developer issue tracker built with Next.js, TypeScript, and
-Tailwind CSS. DevTrack uses Supabase Auth for registration and sign-in.
+DevTrack is a responsive issue tracker with a Kanban board, search, and
+filters. It uses Next.js, TypeScript, Tailwind CSS, and Supabase for
+authentication and persistent, user-isolated issues.
+
+## Release
+
+- [Public production application](https://devtrack-three.vercel.app)
+- [GitHub repository](https://github.com/aguve/devtrack) (private, access required)
+- Production source revision `baa62752e3d1c2ce7944086942ede9c60232fd25`
+
+Evaluator demo access is shared separately through a private channel.
+
+## Project documentation
+
+- [Project specification](docs/PROJECT.md) and [acceptance criteria](docs/REQUIREMENTS.md)
+- [Architecture, technical decisions, and limitations](docs/ARCHITECTURE.md)
+- [Deployment and rollback guide](docs/DEPLOYMENT.md)
+- [Native agent workflow](docs/AGENT_WORKFLOW.md) and [test strategy](docs/TEST_STRATEGY.md)
+- [Backlog and iteration history](docs/TASKS.md)
+- [Independent regression](docs/reports/DT-07-iteration-0.md),
+  [hosted CI](docs/reports/DT-08A-iteration-0-hosted.md), and
+  [production validation](docs/reports/DT-08B-iteration-0.md)
 
 ## Local setup
 
@@ -16,16 +36,19 @@ Set `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` in `.env.local` using
 the dedicated local Supabase stack described below. Run `npm run dev` and
 open [http://localhost:3000](http://localhost:3000).
 
-Set the hosted Supabase Auth Site URL to the production application origin and copy
-`supabase/templates/confirmation.html` into the hosted Confirm signup
-template when configuring deployment. Locally, the CLI loads the template
-and delivers signup email to its Mailpit inbox.
+The local Supabase CLI loads the confirmation template and delivers signup
+email to Mailpit. Hosted email verification settings are documented in the
+[deployment guide](docs/DEPLOYMENT.md).
 
 ## Quality checks
 
 Install the Chromium build pinned by Playwright once per machine. Use
 `npx playwright install --with-deps chromium` on a supported Linux host that
 also needs the system libraries.
+
+Before running the integration and browser suites, configure the disposable
+stack and export the variables in [the local test setup](#running-schema-and-rls-checks-locally)
+from the same shell that will run these commands.
 
 ```sh
 npx playwright install chromium
@@ -84,8 +107,8 @@ npx --yes supabase@3.3.0 start
 npx --yes supabase@3.3.0 db reset --local
 ```
 
-Supply these variables from the dedicated local stack in a private shell
-environment, then run `npm run test:integration`.
+Export these variables from the dedicated local stack in the shell that runs
+`npm run test:integration` and `npm run test:e2e`.
 
 | Variable | Local test value |
 | --- | --- |
@@ -93,6 +116,22 @@ environment, then run `npm run test:integration`.
 | `DEVTRACK_TEST_SUPABASE_URL` | `http://127.0.0.1:54321` |
 | `DEVTRACK_TEST_SUPABASE_ANON_KEY` | Local stack's anonymous JWT key |
 | `DEVTRACK_TEST_SUPABASE_SERVICE_ROLE_KEY` | Local stack's service role JWT key, used in the test process for fixture setup and cleanup |
+| `DEVTRACK_TEST_MAILPIT_URL` | Local Mailpit HTTP URL from the stack status |
+| `SUPABASE_URL` | Same loopback URL as `DEVTRACK_TEST_SUPABASE_URL` |
+| `SUPABASE_PUBLISHABLE_KEY` | The same disposable stack's publishable key |
+
+After exporting the `DEVTRACK_TEST_*` values and `DEVTRACK_DB_TEST`, use these
+exports for the browser suite. Replace the key placeholder with the local
+stack's publishable key.
+
+```sh
+export SUPABASE_URL="${DEVTRACK_TEST_SUPABASE_URL:?Export the dedicated test API URL first}"
+export SUPABASE_PUBLISHABLE_KEY='sb_publishable_REPLACE_WITH_LOCAL_KEY'
+```
+
+Playwright reads both app variables from its process environment and passes
+them to the Next.js server it starts. The `.env.local` setup above serves
+interactive Next.js development.
 
 The reset recreates the dedicated local database and applies the versioned
 migrations. Run it only against the disposable DevTrack test stack. The test

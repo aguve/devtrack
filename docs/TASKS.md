@@ -1,6 +1,6 @@
 # DevTrack backlog
 
-Phase 8 is complete. Phase 9 is the next pending phase.
+All nine development phases and Phase 0 are approved.
 
 | ID | Phase | Status | Proposed exit criteria |
 | --- | --- | --- | --- |
@@ -13,7 +13,7 @@ Phase 8 is complete. Phase 9 is the next pending phase.
 | DT-06 | Board | APPROVED | Responsive, keyboard-accessible Kanban and loading, empty and error states verified. |
 | DT-07 | Regression | APPROVED | Mandatory commands pass, core line coverage reaches 80%, and independent security review passes. |
 | DT-08 | CI and deployment | APPROVED | CI passes and production is reachable without a Vercel session. |
-| DT-09 | Delivery | PENDING | Documentation, reports, repository and public URL delivered. Demo access delivered privately. |
+| DT-09 | Delivery | APPROVED | Documentation, reports, repository and public URL delivered. Demo access delivered privately. |
 
 ## Implementation tasks and acceptance
 
@@ -123,3 +123,11 @@ No correction iterations were required. [Independent report](reports/DT-01-itera
 - The human supervisor authorized free project creation, production migrations, public deployment, and disabling email confirmation. Develop created the projects, applied all three migrations, and deployed the approved revision `baa6275` to [the production alias](https://devtrack-three.vercel.app). Develop created the ordinary demo account and recorded the email verification improvement in the deployment guide. DT-08B moved to REVIEW.
 - DT-08B iteration 0 moved to APPROVED after Testing returned PASS. Testing independently verified the production alias without a Vercel session, protected dashboard navigation, the ordinary demo account, sign-out, and evidence for all three applied migrations. [Production validation report](reports/DT-08B-iteration-0.md)
 - Phase 8 is APPROVED. Phase 9 remains PENDING.
+
+## DT-09 history
+
+- Iteration 0 moved to IN_PROGRESS from release revision `baa6275` with Phase 8 documentation staged by the human supervisor. Native Develop `/root/develop` owns the delivery documentation. Native Testing `/root/testing` owns independent validation.
+- Iteration 0 moved to REVIEW after Develop submitted the README and architecture handoff updates. Develop verified the documentation inventory, links, migrations, and private credential file permissions.
+- Testing returned FAIL on iteration 0. The README omitted two environment variables the Playwright process requires. DT-09 moved through REJECTED to IN_PROGRESS, and the findings were assigned to Develop for correction iteration 1. [Initial validation report](reports/DT-09-iteration-0.md)
+- Iteration 1 moved to REVIEW after Develop documented both shell exports and verified that the exported variables reach a child process.
+- Iteration 1 moved to APPROVED after Testing returned PASS. Testing verified the documented shell setup with placeholder values, Playwright discovered all 20 tests, and handoff links and credential isolation passed. GitHub main was verified at `baa6275`. The human supervisor owns publication of the final documentation. [Final validation report](reports/DT-09-iteration-1.md)
